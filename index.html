@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual do Hóspede</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#C9A96E;--dark:#1A1A1A;--cream:#F8F4EF;--text:#3A3A3A;--muted:#888;--border:rgba(201,169,110,.25);}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);}
+.pg{display:none;min-height:100vh;flex-direction:column;}
+.pg.on{display:flex;}
+button{font-family:'Jost',sans-serif;cursor:pointer;}
+input,textarea{font-family:'Jost',sans-serif;}
+.inp{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;color:var(--dark);background:var(--cream);outline:none;}
+.inp:focus{border-color:var(--gold);background:white;}
+.lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:5px;display:block;}
+.btn-d{width:100%;padding:14px;background:var(--dark);color:white;border:none;border-radius:11px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;}
+.btn-g{width:100%;padding:14px;background:var(--gold);color:var(--dark);border:none;border-radius:11px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;}
+.btn-w{width:100%;padding:14px;background:#25D366;color:white;border:none;border-radius:12px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;}
+.card{background:white;border-radius:13px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.06);}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;user-select:none;}
+.ch .L{display:flex;align-items:center;gap:13px;}
+.ico{width:38px;height:38px;background:var(--dark);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.cb{display:none;padding:16px 20px 20px;border-top:1px solid rgba(0,0,0,.05);}
+.card.op .cb{display:block;}
+.chev{font-size:18px;color:var(--gold);transition:transform .3s;}
+.card.op .chev{transform:rotate(180deg);}
+.gold-line{width:50px;height:1px;background:var(--gold);margin:14px auto;opacity:.6;}
+.sfb{font-size:12px;color:#2e7d32;text-align:center;margin-top:6px;min-height:16px;}
+.hero{background:var(--dark);padding:60px 24px 48px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,169,110,.18),transparent 70%);}
+.choice{background:white;border-radius:14px;padding:22px 18px;box-shadow:0 2px 16px rgba(0,0,0,.07);display:flex;align-items:center;gap:14px;border:2px solid transparent;transition:.15s;}
+.choice:active{border-color:var(--gold);}
+.tab-r{display:flex;background:white;border-radius:12px;padding:4px;margin-bottom:20px;}
+.tab{flex:1;padding:10px;border:none;background:none;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-radius:9px;}
+.tab.on{background:var(--dark);color:white;}
+.dhdr{background:var(--dark);padding:30px 20px 20px;position:relative;overflow:hidden;}
+.dhdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,169,110,.12),transparent 70%);}
+.pill{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;}
+.p-ok{background:rgba(46,125,50,.15);color:#81c784;border:1px solid rgba(46,125,50,.3);}
+.mhdr{padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden;}
+.mhdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,169,110,.18),transparent 70%);}
+.mlogo{width:78px;height:78px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);display:none;margin-bottom:14px;}
+.wbox{background:white;border-left:3px solid var(--gold);margin:16px 20px;padding:20px 22px;border-radius:0 9px 9px 0;}
+.wbox p{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;line-height:1.7;}
+.ablock{margin:16px 20px 0;background:#fff3cd;border:2px solid #f0a500;border-radius:14px;padding:18px;}
+.nb{width:100%;padding:14px;border:none;border-radius:10px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-top:8px;}
+.ni{background:#e8f5e9;color:#2e7d32;border:1.5px solid #81c784;}
+.no{background:#fdecea;color:#c0392b;border:1.5px solid #e57373;}
+.star{font-size:28px;color:#ddd;user-select:none;}
+.star.on{color:var(--gold);}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.pitem{position:relative;border-radius:10px;overflow:hidden;border:1.5px solid var(--border);}
+.pitem img{width:100%;height:110px;object-fit:cover;display:block;}
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.gi{border-radius:10px;overflow:hidden;border:1px solid var(--border);cursor:pointer;}
+.gi img{width:100%;height:100px;object-fit:cover;display:block;}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:flex-end;justify-content:center;}
+.sh{background:white;width:100%;max-width:500px;border-radius:20px 20px 0 0;padding:28px 22px 44px;max-height:88vh;overflow-y:auto;animation:up .3s;}
+@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.fs{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.fs img{max-width:100%;max-height:70vh;border-radius:10px;object-fit:contain;}
+.co{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.cop{width:30px;height:30px;border-radius:50%;border:3px solid transparent;transition:.2s;flex-shrink:0;}
+.cop.sel{border-color:white;transform:scale(1.15);}
+.tl{position:relative;padding-left:18px;margin-top:10px;}
+.tl::before{content:'';position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:var(--border);}
+.tli{position:relative;padding:8px 0 8px 16px;}
+.tli::before{content:'';position:absolute;left:-14px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--gold);border:2px solid white;box-shadow:0 0 0 1px var(--gold);}
+.pf{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px;color:rgba(255,255,255,.8);}
+.pf::before{content:'✦';color:var(--gold);font-size:10px;}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="pg on" id="pg-home">
+  <div class="hero">
+    <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:.8;position:relative;">✦ Bem-vindo ✦</div>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:white;position:relative;">Manual do <em style="font-style:italic;color:#E8D5B0;">Hóspede</em></h1>
+    <div class="gold-line"></div>
+  </div>
+  <div style="flex:1;padding:28px 20px 48px;display:flex;flex-direction:column;gap:14px;">
+    <div class="choice" id="btn-prop">
+      <div style="font-size:34px;">🏠</div>
+      <div style="flex:1;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--dark);">Sou Proprietário</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">Personalize o manual da sua unidade</div></div>
+      <div style="font-size:20px;color:var(--gold);">›</div>
+    </div>
+    <div class="choice" id="btn-hosp">
+      <div style="font-size:34px;">🧳</div>
+      <div style="flex:1;"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--dark);">Sou Hóspede</div><div style="font-size:12px;color:var(--muted);margin-top:3px;">Acesse o manual da sua estadia</div></div>
+      <div style="font-size:20px;color:var(--gold);">›</div>
+    </div>
+    <button id="btn-adm" style="width:100%;padding:13px;background:var(--dark);color:var(--gold);border:1.5px solid var(--gold);border-radius:11px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;">⚙️ Área Administrativa</button>
+    <div style="text-align:center;font-size:11px;color:var(--muted);">Manual do Hóspede · v6.0</div>
+  </div>
+</div>
+
+<!-- AUTH -->
+<div class="pg" id="pg-auth">
+  <div style="background:var(--dark);padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50%,rgba(201,169,110,.15),transparent 70%);"></div>
+    <button id="btn-back-auth" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:12px;position:relative;margin-bottom:10px;display:block;">‹ Voltar</button>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:white;position:relative;">Área do <em style="font-style:italic;color:#E8D5B0;">Proprietário</em></div>
+    <div class="gold-line"></div>
+  </div>
+  <div style="flex:1;padding:24px 20px 40px;">
+    <div class="tab-r">
+      <button class="tab on" id="tab-li" onclick="showTab('li')">Entrar</button>
+      <button class="tab" id="tab-rg" onclick="showTab('rg')">Criar conta</button>
+    </div>
+    <div id="pnl-li">
+      <div style="background:white;border-radius:14px;padding:22px;box-shadow:0 2px 16px rgba(0,0,0,.06);">
+        <div style="margin-bottom:14px;"><label class="lbl">E-mail</label><input class="inp" id="li-email" type="email" placeholder="seu@email.com"/></div>
+        <div style="margin-bottom:6px;"><label class="lbl">Senha</label><input class="inp" id="li-pass" type="password" placeholder="••••••••"/></div>
+        <div id="li-err" style="font-size:12px;color:#c0392b;text-align:center;display:none;margin-bottom:8px;">E-mail ou senha incorretos.</div>
+        <button class="btn-d" id="btn-login" style="margin-top:8px;">Entrar</button>
+        <div style="text-align:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+          <button id="btn-esqueci" style="width:100%;padding:12px;background:var(--cream);border:1.5px solid var(--gold);border-radius:10px;font-size:12px;font-weight:600;color:var(--gold);">🔑 Esqueci minha senha</button>
+        </div>
+      </div>
+    </div>
+    <div id="pnl-rg" style="display:none;">
+      <div style="background:var(--dark);border-radius:14px;padding:20px;margin-bottom:16px;border:2px solid var(--gold);">
+        <div style="display:inline-block;background:var(--gold);color:var(--dark);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:10px;">Gratuito</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:white;margin-bottom:10px;">Manual do Hóspede</div>
+        <div class="pf">Manual personalizado por unidade</div>
+        <div class="pf">Galeria com até 6 fotos</div>
+        <div class="pf">Logo do prédio</div>
+        <div class="pf">Check-in/out via WhatsApp</div>
+        <div class="pf">PDF resumido para o hóspede</div>
+      </div>
+      <div style="background:white;border-radius:14px;padding:22px;box-shadow:0 2px 16px rgba(0,0,0,.06);">
+        <div style="margin-bottom:12px;"><label class="lbl">Nome completo</label><input class="inp" id="rg-name" type="text" placeholder="Seu nome"/></div>
+        <div style="margin-bottom:12px;"><label class="lbl">E-mail</label><input class="inp" id="rg-email" type="email" placeholder="seu@email.com"/></div>
+        <div style="margin-bottom:12px;"><label class="lbl">Senha</label><input class="inp" id="rg-pass" type="password" placeholder="Mínimo 6 caracteres"/></div>
+        <div style="margin-bottom:12px;"><label class="lbl">Confirmar senha</label><input class="inp" id="rg-pass2" type="password" placeholder="Repita a senha"/></div>
+        <div style="margin-bottom:14px;"><label class="lbl">Nome do apartamento</label><input class="inp" id="rg-apto" type="text" placeholder="Ex: Apto 202"/></div>
+        <div id="rg-err" style="font-size:12px;color:#c0392b;text-align:center;display:none;margin-bottom:8px;"></div>
+        <button class="btn-g" id="btn-reg">Criar conta e entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="pg" id="pg-dash">
+  <div class="dhdr">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;position:relative;">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:white;">Olá, <em style="font-style:italic;color:#E8D5B0;" id="d-nome">—</em></div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-top:3px;" id="d-apto">—</div>
+      </div>
+      <button id="btn-logout" style="background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.55);padding:7px 13px;border-radius:7px;font-size:11px;">Sair</button>
+    </div>
+    <div id="d-pill" style="position:relative;"></div>
+  </div>
+  <div style="flex:1;padding:18px 20px 48px;display:flex;flex-direction:column;gap:13px;" id="d-body"></div>
+</div>
+
+<!-- MANUAL -->
+<div class="pg" id="pg-manual">
+  <div class="mhdr" id="m-hdr" style="background:var(--dark);">
+    <div style="font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;opacity:.8;position:relative;">✦ Bem-vindo ✦</div>
+    <img id="m-logo" class="mlogo" src="" alt=""/>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;color:white;position:relative;">Olá, <em style="font-style:italic;color:#E8D5B0;" id="m-apt">Hóspede</em>!</div>
+    <div class="gold-line"></div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);letter-spacing:3px;text-transform:uppercase;position:relative;" id="m-sub">Manual do Hóspede</div>
+  </div>
+  <div style="background:white;border-radius:14px;margin:16px 20px 0;padding:18px;box-shadow:0 2px 16px rgba(0,0,0,.06);">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--dark);margin-bottom:12px;">👤 Seus dados</div>
+    <div style="margin-bottom:10px;"><label class="lbl">Seu primeiro nome</label><input class="inp" id="h-nome" placeholder="Ex: João"/></div>
+    <div><label class="lbl">Número do apartamento</label><input class="inp" id="h-apto" placeholder="Ex: 202"/></div>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px;">Usados nas mensagens ao zelador e proprietário.</div>
+  </div>
+  <div class="ablock" id="aut-block">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="font-size:22px;">⚠️</span>
+      <div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#7a4f00;">Autorização Vigente</div><div style="font-size:10px;color:#a06000;letter-spacing:2px;text-transform:uppercase;">Preenchimento obrigatório</div></div>
+    </div>
+    <p style="font-size:13px;color:#7a4f00;line-height:1.7;margin-bottom:14px;">Antes de acessar o condomínio é <strong>obrigatório</strong> preencher o formulário.</p>
+    <button id="btn-aut" style="width:100%;padding:14px;background:#f0a500;color:white;border:none;border-radius:10px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">📋 Preencher autorização vigente</button>
+    <div id="aut-row" style="display:none;margin-top:10px;">
+      <button id="btn-aut-sim" style="width:100%;padding:11px;background:#2e7d32;color:white;border:none;border-radius:8px;font-size:11px;font-weight:600;text-transform:uppercase;margin-bottom:8px;">✅ Já preenchi</button>
+      <button id="btn-aut-re" style="width:100%;padding:11px;background:none;color:#f0a500;border:1.5px solid #f0a500;border-radius:8px;font-size:11px;font-weight:600;text-transform:uppercase;">🔗 Abrir de novo</button>
+    </div>
+    <div id="aut-ok" style="display:none;background:#e8f5e9;border:1px solid #81c784;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;color:#2e7d32;font-weight:500;">✅ Autorização preenchida!</div>
+  </div>
+  <div class="wbox">
+    <p id="m-msg">É um prazer recebê-lo(a).</p>
+    <div style="margin-top:10px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);">— <span id="m-host">Anfitrião</span></div>
+  </div>
+  <div id="pdf-banner" style="display:none;background:linear-gradient(135deg,var(--dark),#2a2a2a);border:2px solid var(--gold);border-radius:14px;margin:0 20px;padding:18px;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:white;margin-bottom:6px;">📄 Resumo pronto!</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:12px;">Salve no celular.</div>
+    <button id="btn-pdf" style="width:100%;padding:14px;background:var(--gold);color:var(--dark);border:none;border-radius:10px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">📥 Baixar PDF resumido</button>
+  </div>
+  <div style="padding:0 20px 48px;display:flex;flex-direction:column;gap:13px;margin-top:16px;">
+    <div class="card" id="mc-fotos" style="display:none;">
+      <div class="ch" id="sh-fotos"><div class="L"><div class="ico">📸</div><div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark);">Nosso Apartamento</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Conheça o espaço</div></div></div><div class="chev">⌄</div></div>
+      <div class="cb"><div class="gg" id="m-gallery"></div></div>
+    </div>
+    <div class="card" id="mc-wifi">
+      <div class="ch" id="sh-wifi"><div class="L"><div class="ico">📶</div><div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark);">Wi-Fi</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Internet e senhas</div></div></div><div class="chev">⌄</div></div>
+      <div class="cb">
+        <div style="display:flex;gap:13px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05);"><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;min-width:70px;padding-top:2px;">Rede</div><div id="m-rede" style="font-size:14px;color:var(--dark);">—</div></div>
+        <div style="display:flex;gap:13px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05);"><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;min-width:70px;padding-top:2px;">Senha</div><div id="m-wsenha" style="font-size:14px;color:var(--dark);">—</div></div>
+        <div id="m-obs-row" style="display:none;gap:13px;padding:10px 0;"><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;min-width:70px;padding-top:2px;">Obs.</div><div id="m-obs" style="font-size:14px;color:var(--dark);"></div></div>
+      </div>
+    </div>
+    <div class="card" id="mc-ci">
+      <div class="ch" id="sh-ci"><div class="L"><div class="ico">🗝️</div><div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark);">Check-in & Check-out</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Chegada e saída</div></div></div><div class="chev">⌄</div></div>
+      <div class="cb">
+        <div style="background:#fff8ee;border:1.5px solid var(--gold);border-radius:12px;padding:16px;margin-bottom:14px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--dark);margin-bottom:6px;">🔑 Solicitar acesso ao zelador</div>
+          <p style="font-size:13px;line-height:1.6;margin-bottom:12px;">Ao clicar, uma mensagem com seu nome e apartamento será enviada ao zelador solicitando as senhas de acesso ao prédio.</p>
+          <button class="btn-w" id="btn-zel">💬 Pedir senhas ao zelador</button>
+        </div>
+        <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:16px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--dark);margin-bottom:4px;">📲 Avisar o proprietário</div>
+          <button class="nb ni" id="btn-ci-n">🟢 Avisar que cheguei</button>
+          <button class="nb no" id="btn-co-n">🔴 Avisar que saí</button>
+          <div id="fb-notif" style="font-size:12px;color:#c0392b;margin-top:6px;min-height:16px;text-align:center;"></div>
+        </div>
+        <div class="tl">
+          <div class="tli"><div style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:500;">🟢 Recepção pelo Zelador</div><div style="font-size:13px;margin-top:3px;line-height:1.55;">Horários <strong>08h–12h</strong> e <strong>14h–22h</strong>. Ele entregará <strong>pulseiras</strong>, <strong>controle</strong> e <strong>senha do prédio</strong>.<br><em>Fora desse horário contate o anfitrião.</em></div></div>
+          <div class="tli"><div style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:500;">🔐 Fechadura</div><div style="font-size:13px;margin-top:3px;line-height:1.55;">Senha fornecida <strong>exclusivamente pelo anfitrião via WhatsApp</strong>.</div></div>
+          <div class="tli"><div style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:500;">Saída</div><div style="font-size:13px;margin-top:3px;">Avise o zelador ou anfitrião. Obrigado!</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="mc-regras">
+      <div class="ch" id="sh-regras"><div class="L"><div class="ico">📋</div><div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark);">Regras da Casa</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Leitura obrigatória</div></div></div><div class="chev">⌄</div></div>
+      <div class="cb">
+        <div id="m-regras"></div>
+        <div style="margin-top:16px;background:var(--cream);border:1.5px solid var(--gold);border-radius:10px;padding:16px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark);margin-bottom:6px;">⚠️ Aceite obrigatório</div>
+          <p style="font-size:13px;line-height:1.6;margin-bottom:12px;">Preencha o formulário confirmando que leu e concorda.</p>
+          <button class="btn-d" id="btn-regras">📝 Li e aceito as regras</button>
+          <div id="regras-ok" style="display:none;background:#e8f5e9;border:1px solid #81c784;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;color:#2e7d32;font-weight:500;">✅ Aceite registrado!</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="mc-local">
+      <div class="ch" id="sh-local"><div class="L"><div class="ico">📍</div><div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark);">Localização</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Endereço e zeladoria</div></div></div><div class="chev">⌄</div></div>
+      <div class="cb">
+        <div style="display:flex;gap:13px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05);"><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500;min-width:70px;padding-top:2px;">Endereço</div><div style="font-size:14px;color:var(--dark);">Rua João Ramalho, 215 — Praia Grande, Ubatuba - SP</div></div>
+        <button id="btn-maps" style="display:flex;align-items:center;justify-content:center;gap:8px;margin:12px 0;background:var(--dark);color:white;border:none;width:100%;padding:13px;border-radius:10px;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;">🗺️ Abrir no Google Maps</button>
+        <div style="background:var(--dark);border-radius:10px;padding:14px;"><div style="font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">⏰ Horário Zeladoria</div><div style="font-size:14px;color:white;">08h–12h e 14h–22h</div></div>
+      </div>
+    </div>
+    <div class="card" id="mc-anf">
+      <div class="ch" id="sh-anf"><div class="L"><div class="ico">💬</div><div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark);">Fale com o Anfitrião</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Estou aqui para ajudar</div></div></div><div class="chev">⌄</div></div>
+      <div class="cb">
+        <div style="background:var(--dark);border-radius:10px;padding:16px;">
+          <div style="font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Anfitrião</div>
+          <div style="font-size:15px;color:white;margin-bottom:12px;" id="m-anf-nome">—</div>
+          <button class="btn-w" id="btn-anf">💬 Chamar no WhatsApp</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="mc-aval">
+      <div class="ch" id="sh-aval"><div class="L"><div class="ico">⭐</div><div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark);">Avalie a Estadia</div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Sua opinião importa</div></div></div><div class="chev">⌄</div></div>
+      <div class="cb">
+        <div style="padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05);"><div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;margin-bottom:6px;">🧹 Limpeza</div><div id="st-limpeza" style="display:flex;gap:5px;"></div></div>
+        <div style="padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05);"><div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;margin-bottom:6px;">🏊 Piscina</div><div id="st-piscina" style="display:flex;gap:5px;"></div></div>
+        <div style="padding:10px 0;"><div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;margin-bottom:6px;">👥 Funcionários</div><div id="st-func" style="display:flex;gap:5px;"></div></div>
+        <div style="margin-top:12px;"><label class="lbl">Comentário</label><textarea id="rat-txt" class="inp" style="min-height:80px;resize:vertical;" placeholder="Sugestões, elogios..."></textarea></div>
+        <button class="btn-w" id="btn-aval" style="margin-top:12px;">📲 Enviar avaliação</button>
+        <div id="fb-aval" style="font-size:12px;color:#c0392b;margin-top:6px;min-height:16px;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;padding:8px 20px 20px;"><button id="btn-back-m" style="background:none;border:none;font-size:12px;color:var(--muted);">‹ Voltar à tela inicial</button></div>
+  <div style="text-align:center;padding:20px 20px 48px;border-top:1px solid var(--border);"><div class="gold-line"></div><p style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);">Que sua estadia seja memorável ✦</p></div>
+</div>
+
+<!-- FULLSCREEN FOTO -->
+<div class="fs" id="fs-wrap">
+  <button onclick="document.getElementById('fs-wrap').style.display='none'" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,.15);border:none;color:white;width:36px;height:36px;border-radius:50%;font-size:18px;">✕</button>
+  <img id="fs-img" src="" alt=""/>
+  <div id="fs-desc" style="color:white;font-size:16px;margin-top:14px;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;"></div>
+</div>
+
+<!-- MODAL REGRAS -->
+<div id="mod-regras" class="ov" style="display:none;">
+  <div class="sh">
+    <div style="text-align:center;margin-bottom:20px;"><div style="font-size:36px;margin-bottom:10px;">📋</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark);margin-bottom:6px;">Formulário aberto!</div><p style="font-size:13px;color:var(--muted);">Preencha e volte aqui para confirmar.</p></div>
+    <button class="btn-d" id="btn-conf-rg" style="margin-bottom:10px;">✅ Já preenchi</button>
+    <button id="btn-re-rg" style="width:100%;padding:13px;background:none;border:1.5px solid var(--gold);color:var(--gold);border-radius:11px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;">🔗 Abrir novamente</button>
+  </div>
+</div>
+
+<!-- MODAL RECUPERAÇÃO -->
+<div id="mod-recup" class="ov" style="display:none;">
+  <div class="sh">
+    <div id="rp1">
+      <div style="text-align:center;margin-bottom:16px;"><div style="font-size:36px;margin-bottom:10px;">🔑</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark);">Recuperar senha</div></div>
+      <div style="margin-bottom:10px;"><label class="lbl">E-mail cadastrado</label><input class="inp" id="rec-em" type="email" placeholder="seu@email.com"/></div>
+      <div id="rp1-err" style="font-size:12px;color:#c0392b;display:none;text-align:center;margin-bottom:8px;"></div>
+      <button class="btn-d" id="btn-sol-rec" style="margin-bottom:8px;">Solicitar redefinição</button>
+      <button id="btn-cancel-rec" style="width:100%;padding:12px;background:none;border:none;font-size:12px;color:var(--muted);">Cancelar</button>
+    </div>
+    <div id="rp2" style="display:none;">
+      <div style="text-align:center;margin-bottom:16px;"><div style="font-size:36px;margin-bottom:10px;">📲</div><div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--dark);">Código enviado!</div></div>
+      <div style="margin-bottom:10px;"><label class="lbl">Código recebido</label><input class="inp" id="rec-cod" placeholder="Ex: AB3X7KP2" style="text-transform:uppercase;letter-spacing:3px;font-size:16px;font-weight:700;text-align:center;" maxlength="8"/></div>
+      <div style="margin-bottom:10px;"><label class="lbl">Nova senha</label><input class="inp" id="rec-nv" type="password" placeholder="Mínimo 6 caracteres"/></div>
+      <div style="margin-bottom:10px;"><label class="lbl">Confirmar nova senha</label><input class="inp" id="rec-nv2" type="password" placeholder="Repita"/></div>
+      <div id="rp2-err" style="font-size:12px;color:#c0392b;display:none;text-align:center;margin-bottom:8px;"></div>
+      <button class="btn-g" id="btn-redef">✦ Redefinir senha</button>
+    </div>
+    <div id="rp3" style="display:none;text-align:center;">
+      <div style="font-size:44px;margin-bottom:14px;">✅</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark);margin-bottom:8px;">Senha redefinida!</div>
+      <button class="btn-d" id="btn-rp-ok">Ir para o login</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ CONSTANTES ══
+const ADMIN_PASS='bandeiras2026';
+const GFORM='https://docs.google.com/forms/d/e/1FAIpQLSce-5XzyPir6kmslTfJEZy_AYJ57Iqg9OMazwqfjLV7bz-t_g/viewform';
+const LS='mh7';const SESS='mh7s';
+let CFG={};let RATS={limpeza:0,piscina:0,func:0};
+const RL=['','Ruim','Regular','Bom','Muito bom','Excelente'];
+let _pri='#1A1A1A';let _acc='#C9A96E';
+
+// ══ STORAGE ══
+function db(){try{return JSON.parse(localStorage.getItem(LS))||{users:{},admin:{codigos:{}}};}catch{return{users:{},admin:{codigos:{}}};}}
+function sdb(d){localStorage.setItem(LS,JSON.stringify(d));}
+function gU(em){return db().users[em]||null;}
+function sess(){return localStorage.getItem(SESS)||null;}
+function sSess(em){localStorage.setItem(SESS,em);}
+function cSess(){localStorage.removeItem(SESS);}
+function gadm(){return db().admin||{};}
+function sadm(a){const d=db();d.admin=a;sdb(d);}
+
+// ══ IR PARA PÁGINA ══
+function go(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  const el=document.getElementById(id);
+  if(el){el.classList.add('on');window.scrollTo(0,0);}
+}
+
+// ══ TABS ══
+function showTab(t){
+  document.getElementById('pnl-li').style.display=t==='li'?'block':'none';
+  document.getElementById('pnl-rg').style.display=t==='rg'?'block':'none';
+  document.getElementById('tab-li').className='tab'+(t==='li'?' on':'');
+  document.getElementById('tab-rg').className='tab'+(t==='rg'?' on':'');
+}
+
+// ══ ACCORDION ══
+function bindAcc(ids){
+  ids.forEach(function(id){
+    const h=document.getElementById('sh-'+id);
+    const c=document.getElementById('mc-'+id);
+    if(h&&c){h.onclick=function(){c.classList.toggle('op');};}
+  });
+}
+
+// ══ LOGIN ══
+function doLogin(){
+  const em=(document.getElementById('li-email').value||'').trim().toLowerCase();
+  const pw=document.getElementById('li-pass').value||'';
+  const err=document.getElementById('li-err');
+  const u=gU(em);
+  if(!u||u.pass!==btoa(pw)){err.style.display='block';return;}
+  err.style.display='none';sSess(em);openDash(u);
+}
+
+// ══ CADASTRO ══
+function doCadastro(){
+  const name=(document.getElementById('rg-name').value||'').trim();
+  const em=(document.getElementById('rg-email').value||'').trim().toLowerCase();
+  const pw=document.getElementById('rg-pass').value||'';
+  const pw2=document.getElementById('rg-pass2').value||'';
+  const apto=(document.getElementById('rg-apto').value||'').trim();
+  const err=document.getElementById('rg-err');
+  err.style.display='none';
+  if(!name||!em||!apto||pw.length<6){err.textContent='Preencha todos os campos (senha mín. 6).';err.style.display='block';return;}
+  if(pw!==pw2){err.textContent='As senhas não coincidem.';err.style.display='block';return;}
+  if(gU(em)){err.textContent='E-mail já cadastrado.';err.style.display='block';return;}
+  const d=db();
+  d.users[em]={name:name,email:em,pass:btoa(pw),apto:apto,plan_active:true,activatedAt:Date.now(),
+    config:{nomeApto:apto,nomeAnf:name,msg:'É um prazer recebê-lo(a). Este manual foi preparado com carinho.',
+      wRede:'',wSenha:'',wObs:'',wppAnf:'',wppZel:'',
+      regras:'Não é permitido fumar dentro do apartamento.\nSilêncio após as 22h.\nAnimais somente com autorização prévia.',
+      logo:null,fotos:[],corPri:'#1A1A1A',corAcc:'#C9A96E'}};
+  sdb(d);sSess(em);openDash(d.users[em]);
+}
+
+function doLogout(){cSess();go('pg-home');}
+
+// ══ DASHBOARD ══
+function openDash(user){
+  document.getElementById('d-nome').textContent=user.name.split(' ')[0];
+  document.getElementById('d-apto').textContent=(user.config&&user.config.nomeApto)||user.apto;
+  document.getElementById('d-pill').innerHTML='<div class="pill p-ok"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;"></span>Acesso ativo</div>';
+  buildDash(user);go('pg-dash');
+}
+
+function buildDash(user){
+  const cfg=user.config||{};
+  _pri=cfg.corPri||'#1A1A1A';
+  _acc=cfg.corAcc||'#C9A96E';
+  const fotos=cfg.fotos||[];
+  const cP=['#1A1A1A','#1a3a2a','#1a2a3a','#2d1a3a','#3a1a1a','#3a2d1a'];
+  const cA=['#C9A96E','#e8b84b','#b87333','#8fbc8f','#7ab8d4','#d4879a'];
+  let fGrid='';
+  fotos.forEach(function(f,i){
+    fGrid+='<div class="pitem"><img src="'+f.src+'" alt="foto"/>'
+      +'<input class="inp" value="'+(f.desc||'').replace(/"/g,'&quot;')+'" onchange="editDesc('+i+',this.value)" style="font-size:11px;padding:5px 8px;border-radius:0;border:none;border-top:1px solid var(--border);width:100%;"/>'
+      +'<button onclick="rmFoto('+i+')" style="position:absolute;top:5px;right:5px;background:rgba(0,0,0,.65);color:white;border:none;border-radius:50%;width:24px;height:24px;font-size:13px;">✕</button></div>';
+  });
+  const podeMais=fotos.length<6;
+  document.getElementById('d-body').innerHTML=
+    mkC('dc-logo','🖼️','Logo do Prédio','Imagem no manual',
+      (cfg.logo?'<img src="'+cfg.logo+'" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);display:block;margin-bottom:10px;"/>':
+      '<div style="width:80px;height:80px;border-radius:50%;background:var(--cream);border:2px dashed var(--gold);display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:10px;">🏢</div>')
+      +'<label style="display:inline-flex;align-items:center;gap:6px;background:var(--cream);border:1.5px dashed var(--gold);color:var(--gold);padding:10px 16px;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">📷 Escolher logo<input type="file" accept="image/*" onchange="upLogo(this)" style="display:none;"/></label>'
+      +'<div class="sfb" id="fb-logo"></div>')
+    +mkC('dc-vis','🎨','Visual','Cores e nome',
+      '<div style="margin-bottom:14px;"><label class="lbl">Cor principal</label>'
+      +'<div class="co">'+cP.map(function(c){return'<div class="cop'+(_pri===c?' sel':'')+'" style="background:'+c+';cursor:pointer;" onclick="pickC(\'pri\',\''+c+'\')"></div>';}).join('')+'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><label class="lbl" style="margin:0;">Custom:</label><input type="color" id="cc-pri" value="'+(cfg.corPri||'#1A1A1A')+'" oninput="pickC(\'pri\',this.value)" style="width:36px;height:36px;border:none;border-radius:8px;cursor:pointer;"/></div></div>'
+      +'<div style="margin-bottom:14px;"><label class="lbl">Cor de destaque</label>'
+      +'<div class="co">'+cA.map(function(c){return'<div class="cop'+(_acc===c?' sel':'')+'" style="background:'+c+';cursor:pointer;" onclick="pickC(\'acc\',\''+c+'\')"></div>';}).join('')+'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-top:8px;"><label class="lbl" style="margin:0;">Custom:</label><input type="color" id="cc-acc" value="'+(cfg.corAcc||'#C9A96E')+'" oninput="pickC(\'acc\',this.value)" style="width:36px;height:36px;border:none;border-radius:8px;cursor:pointer;"/></div></div>'
+      +'<div style="margin-bottom:14px;"><label class="lbl">Nome do apartamento</label><input class="inp" id="f-apt" value="'+(cfg.nomeApto||'')+'"/></div>'
+      +'<button class="btn-d" onclick="salvVis()">Salvar visual</button><div class="sfb" id="fb-vis"></div>')
+    +mkC('dc-boas','👋','Boas-vindas','Mensagem ao hóspede',
+      '<div style="margin-bottom:14px;"><label class="lbl">Seu nome</label><input class="inp" id="f-anf" value="'+(cfg.nomeAnf||'')+'"/></div>'
+      +'<div style="margin-bottom:14px;"><label class="lbl">Mensagem</label><textarea class="inp" id="f-msg" style="min-height:80px;resize:vertical;">'+(cfg.msg||'')+'</textarea></div>'
+      +'<button class="btn-d" onclick="salvBoas()">Salvar</button><div class="sfb" id="fb-boas"></div>')
+    +mkC('dc-fotos','📸','Galeria','Até 6 fotos',
+      '<div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Até <strong>6 fotos</strong>. <strong>'+fotos.length+'/6</strong></div>'
+      +'<div class="pgrid" id="admin-fotos">'+fGrid+'</div>'
+      +(podeMais?'<div style="margin-top:12px;border:2px dashed var(--gold);border-radius:10px;padding:16px;text-align:center;background:var(--cream);"><label style="display:inline-flex;align-items:center;gap:6px;background:var(--dark);color:white;padding:10px 18px;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">＋ Adicionar foto<input type="file" accept="image/*" onchange="addFoto(this)" style="display:none;"/></label></div>':
+      '<div style="margin-top:10px;background:#fff3cd;border:1px solid #f0a500;border-radius:8px;padding:10px;font-size:12px;color:#7a4f00;text-align:center;">Limite de 6 fotos atingido.</div>')
+      +'<div class="sfb" id="fb-fotos"></div>')
+    +mkC('dc-wifi','📶','Wi-Fi','Rede e senha',
+      '<div style="margin-bottom:14px;"><label class="lbl">Nome da rede</label><input class="inp" id="f-rede" value="'+(cfg.wRede||'')+'"/></div>'
+      +'<div style="margin-bottom:14px;"><label class="lbl">Senha</label><input class="inp" id="f-wsenha" value="'+(cfg.wSenha||'')+'"/></div>'
+      +'<div style="margin-bottom:14px;"><label class="lbl">Observações</label><textarea class="inp" id="f-wobs" style="min-height:60px;resize:vertical;">'+(cfg.wObs||'')+'</textarea></div>'
+      +'<button class="btn-d" onclick="salvWifi()">Salvar</button><div class="sfb" id="fb-wifi"></div>')
+    +mkC('dc-regras','📋','Regras da Casa','Uma regra por linha',
+      '<div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Digite uma regra por linha.</div>'
+      +'<textarea class="inp" id="f-regras" style="min-height:160px;resize:vertical;line-height:1.8;">'+(cfg.regras||'')+'</textarea>'
+      +'<button class="btn-d" onclick="salvRegras()" style="margin-top:10px;">💾 Salvar regras</button><div class="sfb" id="fb-regras"></div>')
+    +mkC('dc-cont','💬','Contatos','WhatsApp anfitrião e zelador',
+      '<div style="margin-bottom:14px;"><label class="lbl">WhatsApp Anfitrião (só números)</label><input class="inp" id="f-wanf" type="tel" placeholder="Ex: 12999999999" value="'+(cfg.wppAnf||'')+'"/></div>'
+      +'<div style="margin-bottom:14px;"><label class="lbl">WhatsApp Zelador (só números)</label><input class="inp" id="f-wzel" type="tel" placeholder="Ex: 12974076682" value="'+(cfg.wppZel||'')+'"/></div>'
+      +'<button class="btn-d" onclick="salvCont()">Salvar contatos</button><div class="sfb" id="fb-cont"></div>')
+    +'<button onclick="doPreview()" style="width:100%;padding:15px;background:var(--gold);color:var(--dark);border:none;border-radius:12px;font-size:12px;font-weight:700;letter-spacing:2px;text-
